@@ -5,7 +5,7 @@ from .models import Greeting
 
 
 def index(request):
-    return HttpResponse("Hello, Django!")
+    return HttpResponse("Hello, world. You're at the hello index.")
 
 
 def db(request):

@@ -141,18 +141,18 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # ログイン後のリダイレクト先
 LOGIN_REDIRECT_URL = '/bbs/'
-
-# ローカル環境の設定を読み込む
-try:
-    from .local_settings import *
-except ImportError:
-    pass
-
-if not DEBUG:
-    SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
-    import django_heroku
-
-    django_heroku.settings(locals())
-
-    db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
-    DATABASES['default'].update(db_from_env)
+#
+# # ローカル環境の設定を読み込む
+# try:
+#     from .local_settings import *
+# except ImportError:
+#     pass
+#
+# if not DEBUG:
+#     SECRET_KEY = os.environ['SECRET_KEY']
+#     import django_heroku
+#
+#     django_heroku.settings(locals())
+#
+#     db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
+#     DATABASES['default'].update(db_from_env)
