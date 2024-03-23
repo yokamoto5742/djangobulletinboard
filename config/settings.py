@@ -69,20 +69,12 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 
 if IS_HEROKU_APP:
-    # DATABASES = {
-    #     "default": dj_database_url.config(
-    #         conn_max_age=600,
-    #         conn_health_checks=True,
-    #         ssl_require=True,
-    #     ),
-    # }
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'postgres',
-            'USER': 'postgres',
-            'PASSWORD': 'postgres',
-        }
+        "default": dj_database_url.config(
+            conn_max_age=600,
+            conn_health_checks=True,
+            ssl_require=True,
+        ),
     }
 else:
     DATABASES = {
