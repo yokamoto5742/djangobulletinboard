@@ -14,6 +14,9 @@ SECRET_KEY = os.environ.get(
 
 IS_HEROKU_APP = "DYNO" in os.environ and not "CI" in os.environ
 
+if IS_HEROKU_APP:
+    DEBUG = True
+
 if not IS_HEROKU_APP:
     DEBUG = True
 
@@ -66,12 +69,20 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 
 if IS_HEROKU_APP:
+    # DATABASES = {
+    #     "default": dj_database_url.config(
+    #         conn_max_age=600,
+    #         conn_health_checks=True,
+    #         ssl_require=True,
+    #     ),
+    # }
     DATABASES = {
-        "default": dj_database_url.config(
-            conn_max_age=600,
-            conn_health_checks=True,
-            ssl_require=True,
-        ),
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'postgres',
+            'USER': 'postgres',
+            'PASSWORD': 'postgres',
+        }
     }
 else:
     DATABASES = {
