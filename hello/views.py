@@ -5,7 +5,7 @@ from .models import Greeting
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the hello index.")
+    return render(request, "hello/index.html")
 
 
 def db(request):
