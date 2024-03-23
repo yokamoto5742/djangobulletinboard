@@ -1,0 +1,18 @@
+{% extends 'bbs/base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+
+    <h1 class="mt-5">投稿の削除</h1>
+    <p>"{{ object.id }}:{{ article.content }}"を削除しますか？</p>
+    <form action="" method="post">
+        {% csrf_token %}
+        {% bootstrap_button button_type="submit" size="md" button_class="btn-danger" content="削除" %}
+    </form>
+    <div class="mt-3">
+        <a href='{% url "bbs:index" %}'>
+            {% bootstrap_button button_type="submit" size="md" button_class="btn-secondary" content="戻る" %}
+        </a>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'bbs/base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+    <h1 class="mb-5">検索結果</h1>
+    {% if articles %}
+        <p>{{ articles.count }}件見つかりました。</p>
+        {% for article in articles %}
+        <div class="card bg-light shadow-sm mb-3">
+            <div class="card-body">
+                <p>{{ article.id }}:{{ article.author }}:{{ article.created_at }}</p>
+                <p><a href='{% url "bbs:detail" article.id %}'>{{ article.content }}</a></p>
+            </div>
+        </div>
+    {% endfor %}
+    {% else %}
+        <p>"{{ searchform.query.value }}" に一致する投稿はありません。</p>
+    {% endif %}
+<div class="mt-3">
+    <a href='{% url "bbs:index" %}'>
+        {% bootstrap_button button_type="submit" size="md" button_class="btn-secondary" content="戻る" %}
+    </a>
+</div>
+{% endblock %}
