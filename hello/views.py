@@ -1,16 +1,12 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.views import generic
 from .models import Article
 
 from .models import Greeting
 
 
-def index(request):
-    articles = Article.objects.all()
-    context = {
-        'articles': articles
-    }
-    return render(request, 'hello/index.html', context)
+class IndexView(generic.ListView):
+    model = Article
 
 
 def db(request):
