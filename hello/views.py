@@ -7,6 +7,7 @@ from .models import Greeting
 
 class IndexView(generic.ListView):
     model = Article
+    template_name = "hello/index.html"
 
 
 def db(request):

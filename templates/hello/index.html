@@ -5,8 +5,8 @@
     <title>Djangoを使ってみよう!</title>
 </head>
     <body>
-        <h1>モデルからデータを取り出して表示してみよう!</h1>
-        {% for article in articles %}
+        <h1>クラスベースの汎用ビューを使ってみよう!</h1>
+        {% for article in object_list %}
             <p>{{ article.content }}</p>
         {% endfor %}
     </body>
