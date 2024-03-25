@@ -69,6 +69,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
+# # セッションエンジン (デフォルトはデータベースを使用)
+# SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # デフォルト設定
+#
+# # セッションの有効期限設定 (例: 2週間)
+# SESSION_COOKIE_AGE = 1209600  # 秒単位
+#
+# # セッションがブラウザを閉じたときに削除されるかどうか
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+#
+# # セッションデータをデータベースに保存する間隔
+# SESSION_SAVE_EVERY_REQUEST = False
+
 if IS_HEROKU_APP:
     DATABASES = {
         "default": dj_database_url.config(

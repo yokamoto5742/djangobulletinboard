@@ -5,11 +5,10 @@
 <h1 class="mb-5">Djangoで作るログイン機能</h1>
 {% if user.is_authenticated %}
     <p>{{ user }}でログイン</p>
-    <div>
-        <a href="{% url 'logout' %}">
-            {% bootstrap_button button_type="submit" size="md" button_class="btn-danger" content="ログアウト" %}
-        </a>
-    </div>
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">ログアウト</button>
+    </form>
 {% else %}
     <section>
     <form action='{% url "login" %}' method="post">
