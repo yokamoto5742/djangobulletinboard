@@ -1,1 +1,2 @@
-web: gunicorn djangobulletinboard.wsgi:application
+web: gunicorn config.wsgi
+
