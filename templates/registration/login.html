@@ -2,7 +2,7 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
-<h1 class="mb-5">Djangoで作るログイン機能</h1>
+<h1 class="mb-5">ログイン画面</h1>
 {% if user.is_authenticated %}
     <p>{{ user }}でログイン</p>
     <form action="{% url 'logout' %}" method="post">
