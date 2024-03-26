@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "django_bootstrap5",
     "hello.apps.HelloConfig",
     "bbs.apps.BbsConfig",
+    "accounts.apps.AccountsConfig",
 ]
 
 MIDDLEWARE = [
