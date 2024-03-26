@@ -11,7 +11,7 @@ SECRET_KEY = os.environ.get(
     default=secrets.token_urlsafe(nbytes=64),
 )
 
-IS_HEROKU_APP = "DYNO" in os.environ and not "CI" in os.environ
+IS_HEROKU_APP = "DYNO" in os.environ  # and not "CI" in os.environ
 
 # if IS_HEROKU_APP:
 #     DEBUG = True
