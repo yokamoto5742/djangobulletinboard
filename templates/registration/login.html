@@ -4,7 +4,7 @@
 {% block content %}
 <h1 class="mb-5">ログイン画面</h1>
 {% if user.is_authenticated %}
-    <p>{{ user }}でログイン</p>
+    <p>{{ user }}でログイン中</p>
     <form action="{% url 'logout' %}" method="post">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger">ログアウト</button>
