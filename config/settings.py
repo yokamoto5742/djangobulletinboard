@@ -83,6 +83,8 @@ if IS_HEROKU_APP:
         ),
     }
 
+    SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
     # SESSION_ENGINE = "django.contrib.sessions.backends.cache"
     # SESSION_CACHE_ALIAS = "default"
     # CACHES = {
@@ -94,6 +96,10 @@ if IS_HEROKU_APP:
     #         }
     #     }
     # }
+
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
 
 else:
     DATABASES = {
