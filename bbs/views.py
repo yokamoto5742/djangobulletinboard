@@ -3,8 +3,8 @@ from .models import Article
 from django.urls import reverse_lazy
 from django.shortcuts import render
 from .forms import SearchForm
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.exceptions import PermissionDenied
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+# from django.core.exceptions import PermissionDenied
 
 
 class IndexView(generic.ListView):
@@ -24,31 +24,32 @@ class CreateView(LoginRequiredMixin, generic.edit.CreateView):
 
     def form_valid(self, form):
         form.instance.author = self.request.user
-        return super(CreateView, self).form_valid(form)
+        return super().form_valid(form)
 
 
-class UpdateView(LoginRequiredMixin, generic.edit.UpdateView):
+class UpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.edit.UpdateView):
     model = Article
     template_name = 'bbs/create.html'
     fields = ['content']
 
-    def dispatch(self, request, *args, **kwargs):
+    def test_func(self):
         obj = self.get_object()
-        if obj.author != self.request.user:
-            raise PermissionDenied('編集権限がありません')
-        return super(UpdateView, self).dispatch(request, *args, **kwargs)
+        return obj.author == self.request.user
 
 
-class DeleteView(LoginRequiredMixin, generic.edit.DeleteView):
+class DeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.edit.DeleteView):
     model = Article
     template_name = 'bbs/delete.html'
     success_url = reverse_lazy('bbs:index')
+
+    def test_func(self):
+        obj = self.get_object()
+        return obj.author == self.request.user
 
 
 def search(request):
     articles = None
     searchform = SearchForm(request.GET)
-
     if searchform.is_valid():
         query = searchform.cleaned_data['query']
         articles = Article.objects.filter(content__icontains=query)
