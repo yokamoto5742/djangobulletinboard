@@ -1,2 +1,2 @@
-web: gunicorn djangobulletinboard.wsgi
+web: gunicorn config.wsgi
 release: python manage.py migrate --no-input
