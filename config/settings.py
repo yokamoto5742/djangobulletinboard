@@ -11,18 +11,11 @@ SECRET_KEY = os.environ.get(
     default=secrets.token_urlsafe(nbytes=64),
 )
 
-IS_HEROKU_APP = "DYNO" in os.environ and not "CI" in os.environ
+IS_HEROKU_APP = "DYNO" in os.environ and "CI" not in os.environ
 
-if IS_HEROKU_APP:
-    DEBUG = True
+DEBUG = IS_HEROKU_APP or not IS_HEROKU_APP
 
-if not IS_HEROKU_APP:
-    DEBUG = True
-
-if IS_HEROKU_APP:
-    ALLOWED_HOSTS = ["*"]
-else:
-    ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"] if IS_HEROKU_APP else []
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -53,7 +46,6 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-
 ROOT_URLCONF = "config.urls"
 
 TEMPLATES = [
@@ -82,25 +74,9 @@ if IS_HEROKU_APP:
             ssl_require=True,
         ),
     }
-
     SESSION_ENGINE = 'django.contrib.sessions.backends.db'
-
-    # SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-    # SESSION_CACHE_ALIAS = "default"
-    # CACHES = {
-    #     "default": {
-    #         "BACKEND": "django_redis.cache.RedisCache",
-    #         "LOCATION": os.environ.get("REDIS_URL", "redis://localhost:6379/1"),
-    #         "OPTIONS": {
-    #             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-    #         }
-    #     }
-    # }
-
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-
-
 else:
     DATABASES = {
         'default': {
@@ -112,7 +88,6 @@ else:
             'PORT': '5432',
         }
     }
-
     SESSION_ENGINE = "django.contrib.sessions.backends.cache"
     SESSION_CACHE_ALIAS = "default"
     CACHES = {
@@ -124,6 +99,9 @@ else:
             }
         }
     }
+
+SESSION_COOKIE_AGE = 1800  # 30分（秒単位）
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -141,13 +119,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LANGUAGE_CODE = "ja"
-
 TIME_ZONE = "Asia/Tokyo"
-
 USE_I18N = True
-
 USE_TZ = True
-
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATIC_URL = "/static/"
@@ -162,7 +136,5 @@ STORAGES = {
 }
 
 WHITENOISE_KEEP_ONLY_HASHED_FILES = True
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
 LOGIN_REDIRECT_URL = "/bbs/"
