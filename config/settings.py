@@ -77,6 +77,15 @@ if IS_HEROKU_APP:
     SESSION_ENGINE = 'django.contrib.sessions.backends.db'
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+    CACHES = {
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": os.environ.get("REDIS_URL", "redis://127.0.0.1:6379/1"),
+            "OPTIONS": {
+                "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            }
+        }
+    }
 else:
     DATABASES = {
         'default': {
