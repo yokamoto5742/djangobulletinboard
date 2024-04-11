@@ -90,15 +90,15 @@ else:
     }
     SESSION_ENGINE = "django.contrib.sessions.backends.cache"
     SESSION_CACHE_ALIAS = "default"
-    # CACHES = {
-    #     "default": {
-    #         "BACKEND": "django_redis.cache.RedisCache",
-    #         "LOCATION": os.environ.get("REDIS_URL", "redis://127.0.0.1:6379/1"),
-    #         "OPTIONS": {
-    #             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-    #         }
-    #     }
-    # }
+    CACHES = {
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": os.environ.get("REDIS_URL", "redis://127.0.0.1:6379/1"),
+            "OPTIONS": {
+                "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            }
+        }
+    }
 
 SESSION_COOKIE_AGE = 1800  # 30分（秒単位）
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
@@ -138,52 +138,3 @@ STORAGES = {
 WHITENOISE_KEEP_ONLY_HASHED_FILES = True
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_REDIRECT_URL = "/bbs/"
-
-
-def get_cache():
-    import os
-    try:
-        servers = os.environ['MEMCACHIER_SERVERS']
-        username = os.environ['MEMCACHIER_USERNAME']
-        password = os.environ['MEMCACHIER_PASSWORD']
-        return {
-            'default': {
-                'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
-                # TIMEOUT is not the connection timeout! It's the default expiration
-                # timeout that should be applied to keys! Setting it to `None`
-                # disables expiration.
-                'TIMEOUT': None,
-                'LOCATION': servers,
-                'OPTIONS': {
-                    'binary': True,
-                    'username': username,
-                    'password': password,
-                    'behaviors': {
-                        # Enable faster IO
-                        'no_block': True,
-                        'tcp_nodelay': True,
-                        # Keep connection alive
-                        'tcp_keepalive': True,
-                        # Timeout settings
-                        'connect_timeout': 2000,  # ms
-                        'send_timeout': 750 * 1000,  # us
-                        'receive_timeout': 750 * 1000,  # us
-                        '_poll_timeout': 2000,  # ms
-                        # Better failover
-                        'ketama': True,
-                        'remove_failed': 1,
-                        'retry_timeout': 2,
-                        'dead_timeout': 30,
-                    }
-                }
-            }
-        }
-    except:
-        return {
-            'default': {
-                'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
-            }
-        }
-
-
-CACHES = get_cache()
