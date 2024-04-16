@@ -74,9 +74,11 @@ if IS_HEROKU_APP:
             ssl_require=True,
         ),
     }
+
     SESSION_ENGINE = 'django.contrib.sessions.backends.db'
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+
     CACHES = {
         "default": {
             "BACKEND": "django_redis.cache.RedisCache",
@@ -97,8 +99,10 @@ else:
             'PORT': '5432',
         }
     }
+
     SESSION_ENGINE = "django.contrib.sessions.backends.cache"
     SESSION_CACHE_ALIAS = "default"
+
     CACHES = {
         "default": {
             "BACKEND": "django_redis.cache.RedisCache",
